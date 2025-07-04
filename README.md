@@ -18,7 +18,7 @@ MEASURE(Vector, Sum) {
     sum += v;
   }
   Stop();
-  DUMMY(sum);
+  MEASURE_DUMMY(sum);
 }
 ```
 
@@ -54,3 +54,18 @@ MEASURE_F(VectorMeasure, Sum) {
   DUMMY(sum);
 }
 ```
+
+## 構成
+
+- include/
+  - 必要なヘッダファイルが入っています。
+- src/
+  - リンクする必要があるソースファイルが入っています。
+- samples/
+  - サンプルコードです。
+- LICENSE
+  - MITライセンスのライセンスファイルです。
+- README.md
+  - このファイルです。
+- Makefile
+  - CMakeLists.txtを作るまでのとりあえずの処置として置いておきます。
