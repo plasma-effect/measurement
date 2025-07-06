@@ -13,11 +13,13 @@ void Measure::Stop() {
   stopped = true;
 }
 microseconds Measure::ExecuteMeasure() {
+  SetUp();
   Start();
   MeasureBody();
   if (!stopped) [[likely]] {
     Stop();
   }
+  TearDown();
   return duration_cast<microseconds>(end_ - start_);
 }
 

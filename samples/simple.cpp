@@ -12,3 +12,17 @@ MEASURE(Simple, VectorSum) {
   }
   MEASURE_DUMMY(sum);
 }
+
+MEASURE(Simple, VectorSum2) {
+  std::vector<int> vec;
+  for (int i = 0; i < 10000; ++i) {
+    vec.emplace_back(i);
+  }
+  int sum = 0;
+  Start();
+  for (auto v : vec) {
+    sum += v;
+  }
+  Stop();
+  MEASURE_DUMMY(sum);
+}
