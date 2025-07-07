@@ -2,8 +2,12 @@
 #include <iostream>
 using namespace std::chrono;
 
+namespace {
+using measure_ptr = std::unique_ptr<measurement::Measure>;
+std::vector<std::tuple<const char*, const char*, int, measure_ptr>> measures;
+} // namespace
+
 namespace measurement {
-std::vector<std::unique_ptr<Measure>> Measure::measures;
 void Measure::Start() {
   stopped = false;
   start_ = system_clock::now();
@@ -22,16 +26,16 @@ microseconds Measure::ExecuteMeasure() {
   TearDown();
   return duration_cast<microseconds>(end_ - start_);
 }
-
-void* Measure::RegistorMeasurement(std::unique_ptr<Measure>&& ptr) {
-  measures.push_back(std::move(ptr));
+void* RegistorMeasurement(const char* suite_name, const char* name, int index,
+                          std::unique_ptr<Measure>&& ptr) {
+  measures.emplace_back(suite_name, name, index, std::move(ptr));
   return nullptr;
 }
-void Measure::ExecuteAll(int count) {
-  for (auto& m_ptr : measures) {
+void ExecuteAll(int count) {
+  for (auto& [sname, name, idx, m_ptr] : measures) {
     for (int c = 0; c < count; ++c) {
       auto elapsed_us = m_ptr->ExecuteMeasure();
-      std::cout << m_ptr->GetSuiteName() << "," << m_ptr->GetName() << ","
+      std::cout << sname << "," << name << "," << idx << ","
                 << elapsed_us.count() << std::endl;
     }
   }

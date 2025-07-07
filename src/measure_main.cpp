@@ -16,5 +16,5 @@ int main(int argc, const char* argv[]) {
     std::cerr << "<count> must be greater than 0" << std::endl;
     return 1;
   }
-  ::measurement::Measure::ExecuteAll(count);
+  ::measurement::ExecuteAll(count);
 }
