@@ -12,6 +12,9 @@ simple.o: samples/simple.cpp $(TEST_SRCS)
 fixture.o: samples/fixture.cpp $(TEST_SRCS)
 	g++ $^ -std=c++23 -o $@ -Wall -Wextra -Iinclude/
 
+typed.o: samples/typed.cpp $(TEST_SRCS)
+	g++ $^ -std=c++23 -o $@ -Wall -Wextra -Iinclude/
+
 .PHONY: clean
 clean:
 	rm -f *.o
