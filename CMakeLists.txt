@@ -9,4 +9,3 @@ add_library(measurement src/measure_main.cpp src/measurement_base.cpp)
 target_include_directories(measurement PUBLIC
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
 )
-message(${CMAKE_CURRENT_SOURCE_DIR}/include)
