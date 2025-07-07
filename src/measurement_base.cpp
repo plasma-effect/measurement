@@ -26,7 +26,7 @@ microseconds Measure::ExecuteMeasure() {
   TearDown();
   return duration_cast<microseconds>(end_ - start_);
 }
-void* RegistorMeasurement(const char* suite_name, const char* name, int index,
+void* RegisterMeasurement(const char* suite_name, const char* name, int index,
                           std::unique_ptr<Measure>&& ptr) {
   measures.emplace_back(suite_name, name, index, std::move(ptr));
   return nullptr;

@@ -26,10 +26,13 @@ public:
 
   virtual std::chrono::microseconds ExecuteMeasure();
 };
-void* RegistorMeasurement(const char* suite_name, const char* name, int index,
+void* RegisterMeasurement(const char* suite_name, const char* name, int index,
                           std::unique_ptr<Measure>&& ptr);
 void ExecuteAll(int count);
 } // namespace measurement
+
+#define MEASURE_SUITE_NAME(suite_name, name)                                   \
+  MEASURE_PP_CAT5(suite_name, _, name, _, Measure)
 
 #define MEASURE_CONSTRUCT(suite_name, name, class_name, parent_name)           \
   static_assert(sizeof(MEASURE_PP_STR(suite_name)) > 1,                        \
@@ -42,12 +45,12 @@ void ExecuteAll(int count);
   protected:                                                                   \
     virtual void MeasureBody() override;                                       \
   };                                                                           \
-  void* MEASURE_PP_CAT(class_name, test_info) =                                \
-      ::measurement::RegistorMeasurement(MEASURE_PP_STR(suite_name),           \
+  static void* MEASURE_PP_CAT(class_name, _registered) =                       \
+      ::measurement::RegisterMeasurement(MEASURE_PP_STR(suite_name),           \
                                          MEASURE_PP_STR(name), 0,              \
                                          std::make_unique<class_name>());      \
   void class_name::MeasureBody()
 
 #define MEASURE(suite_name, name)                                              \
-  MEASURE_CONSTRUCT(suite_name, name, MEASURE_PP_CAT(suite_name, name),        \
+  MEASURE_CONSTRUCT(suite_name, name, MEASURE_SUITE_NAME(suite_name, name),    \
                     ::measurement::Measure)

@@ -17,4 +17,4 @@ typed.o: samples/typed.cpp $(TEST_SRCS)
 
 .PHONY: clean
 clean:
-	rm -f *.o
+	rm -f *.o *.d
