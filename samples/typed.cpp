@@ -12,9 +12,11 @@ TYPED_MEASURE(RandomEngine, Sum) {
   TypeParam engine;
   std::uniform_int_distribution<int> dist(1, 15);
   int sum = 0;
+  Start();
   for (int i = 0; i < 10000; ++i) {
     sum += dist(engine);
   }
+  Stop();
   MEASURE_DUMMY(sum);
 }
 
@@ -22,8 +24,10 @@ TYPED_MEASURE(RandomEngine, Xor) {
   TypeParam engine;
   std::uniform_int_distribution<int> dist(1, 15);
   int sum = 0;
+  Start();
   for (int i = 0; i < 10000; ++i) {
     sum ^= dist(engine);
   }
+  Stop();
   MEASURE_DUMMY(sum);
 }

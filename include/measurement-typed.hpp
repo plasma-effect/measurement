@@ -40,6 +40,12 @@ struct TypeParameterizedMeasure<TestFixture, Null, Types<>> {
     using TestFixture = parent_tpl<T>;                                         \
     using TypeParam = T;                                                       \
     virtual void MeasureBody() override;                                       \
+    void Start() {                                                             \
+      ::measurement::Measure::Start();                                         \
+    }                                                                          \
+    void Stop() {                                                              \
+      ::measurement::Measure::Stop();                                          \
+    }                                                                          \
   };                                                                           \
   static void* MEASURE_PP_CAT(class_tpl, _registered) =                        \
       ::measurement::internal::TypeParameterizedMeasure<                       \
