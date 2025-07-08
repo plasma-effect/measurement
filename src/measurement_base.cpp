@@ -4,7 +4,8 @@ using namespace std::chrono;
 
 namespace {
 using measure_ptr = std::unique_ptr<measurement::Measure>;
-std::vector<std::tuple<const char*, const char*, int, measure_ptr>> measures;
+std::vector<std::tuple<const char*, const char*, std::size_t, measure_ptr>>
+    measures;
 } // namespace
 
 namespace measurement {
@@ -26,8 +27,8 @@ microseconds Measure::ExecuteMeasure() {
   TearDown();
   return duration_cast<microseconds>(end_ - start_);
 }
-void* RegisterMeasurement(const char* suite_name, const char* name, int index,
-                          std::unique_ptr<Measure>&& ptr) {
+void* RegisterMeasurement(const char* suite_name, const char* name,
+                          std::size_t index, std::unique_ptr<Measure>&& ptr) {
   measures.emplace_back(suite_name, name, index, std::move(ptr));
   return nullptr;
 }

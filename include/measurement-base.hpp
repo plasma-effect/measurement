@@ -26,8 +26,8 @@ public:
 
   virtual std::chrono::microseconds ExecuteMeasure();
 };
-void* RegisterMeasurement(const char* suite_name, const char* name, int index,
-                          std::unique_ptr<Measure>&& ptr);
+void* RegisterMeasurement(const char* suite_name, const char* name,
+                          std::size_t index, std::unique_ptr<Measure>&& ptr);
 void ExecuteAll(int count);
 } // namespace measurement
 
