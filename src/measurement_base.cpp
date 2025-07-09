@@ -4,8 +4,7 @@ using namespace std::chrono;
 
 namespace {
 using measure_ptr = std::unique_ptr<measurement::Measure>;
-std::vector<std::tuple<const char*, const char*, std::size_t, measure_ptr>>
-    measures;
+std::vector<std::tuple<std::array<std::string, 3>, measure_ptr>> measures;
 } // namespace
 
 namespace measurement {
@@ -27,16 +26,18 @@ microseconds Measure::ExecuteMeasure() {
   TearDown();
   return duration_cast<microseconds>(end_ - start_);
 }
-void* RegisterMeasurement(const char* suite_name, const char* name,
-                          std::size_t index, std::unique_ptr<Measure>&& ptr) {
-  measures.emplace_back(suite_name, name, index, std::move(ptr));
+void* RegisterMeasurement(std::string suite_name, std::string name,
+                          std::string param, std::unique_ptr<Measure>&& ptr) {
+  measures.emplace_back(
+      std::array{std::move(suite_name), std::move(name), std::move(param)},
+      std::move(ptr));
   return nullptr;
 }
 void ExecuteAll(int count) {
-  for (auto& [sname, name, idx, m_ptr] : measures) {
+  for (auto& [names, m_ptr] : measures) {
     for (int c = 0; c < count; ++c) {
       auto elapsed_us = m_ptr->ExecuteMeasure();
-      std::cout << sname << "," << name << "," << idx << ","
+      std::cout << names[0] << "," << names[1] << "," << names[2] << ","
                 << elapsed_us.count() << std::endl;
     }
   }

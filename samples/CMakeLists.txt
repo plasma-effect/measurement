@@ -13,7 +13,7 @@ FetchContent_Declare(
 )
 FetchContent_MakeAvailable(PlasmaMeasurement)
 
-add_executable(samples simple.cpp fixture.cpp typed.cpp)
+add_executable(samples simple.cpp fixture.cpp typed.cpp named_type.cpp)
 target_link_libraries(samples PRIVATE measurement)
 
 add_executable(simple simple.cpp)
@@ -24,6 +24,9 @@ target_link_libraries(fixture PRIVATE measurement)
 
 add_executable(typed typed.cpp)
 target_link_libraries(typed PRIVATE measurement)
+
+add_executable(named_type named_type.cpp)
+target_link_libraries(named_type PRIVATE measurement)
 
 add_executable(stress_test stress_test.cpp)
 target_link_libraries(stress_test PRIVATE measurement)

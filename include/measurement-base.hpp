@@ -26,8 +26,8 @@ public:
 
   virtual std::chrono::microseconds ExecuteMeasure();
 };
-void* RegisterMeasurement(const char* suite_name, const char* name,
-                          std::size_t index, std::unique_ptr<Measure>&& ptr);
+void* RegisterMeasurement(std::string suite_name, std::string name,
+                          std::string param, std::unique_ptr<Measure>&& ptr);
 void ExecuteAll(int count);
 } // namespace measurement
 
@@ -47,7 +47,7 @@ void ExecuteAll(int count);
   };                                                                           \
   static void* MEASURE_PP_CAT(class_name, _registered) =                       \
       ::measurement::RegisterMeasurement(MEASURE_PP_STR(suite_name),           \
-                                         MEASURE_PP_STR(name), 0,              \
+                                         MEASURE_PP_STR(name), "0",            \
                                          std::make_unique<class_name>());      \
   void class_name::MeasureBody()
 
