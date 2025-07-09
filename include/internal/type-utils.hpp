@@ -30,5 +30,5 @@ template <> struct Types<> {
 template <typename T>
 using GenerateTypeList = typename internal::GenerateTypeListBase<T>::type;
 template <typename... Ts>
-using ConcatTypeList = typename internal::ConcatTypeListBase<Ts...>;
+using ConcatTypeList = typename internal::ConcatTypeListBase<Ts...>::type;
 } // namespace measurement
