@@ -1,5 +1,8 @@
 #include "measurement-base.hpp"
+#include <array>
 #include <iostream>
+#include <memory>
+#include <tuple>
 using namespace std::chrono;
 
 namespace {
